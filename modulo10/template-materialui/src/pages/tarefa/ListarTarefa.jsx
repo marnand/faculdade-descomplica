@@ -17,6 +17,7 @@ import Modal from '@mui/material/Modal';
 
 import CriarTarefa from './CriarTarefa';
 import EditarTarefa from './EditarTarefa';
+import { Box } from '@mui/material';
 
 //A função abaixo é usada para criar o array contendo os dados iniciais da listagem de tarefas.
 function createData(
@@ -55,7 +56,7 @@ const ListarTarefa = () => {
   const handleOpenEditar = () => setOpenEditar(true);
   const handleCloseEditar = () => setOpenEditar(false);
   const handleCloseDelete = () => {
-    setOpenDelete(true);
+    setOpenDelete(false);
     setIdToDelete(0);
   };
 
@@ -93,6 +94,7 @@ const ListarTarefa = () => {
     );
 
     setIdToDelete(0)
+    setOpenDelete(false)
   }
 
   return (
@@ -167,13 +169,18 @@ const ListarTarefa = () => {
           onClose={handleCloseDelete}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
-        >
-          <div>Certeza que deseja remover?</div>
+          sx={{
 
-          <div>
-            <Button onClick={deleteYes}>Sim</Button>
-            <Button onClick={handleCloseDelete}>Não</Button>
-          </div>
+          }}
+        >
+          <Box sx={style}>
+            <div>Certeza que deseja remover?</div>
+
+            <Box display={'flex'} gap={'1rem'}>
+              <Button variant="contained" color="success" onClick={deleteYes}>Sim</Button>
+              <Button variant="contained" color="error" onClick={handleCloseDelete}>Não</Button>
+            </Box>
+          </Box>
         </Modal>
       </div>
 
@@ -207,3 +214,18 @@ const ListarTarefa = () => {
 };
 
 export default ListarTarefa;
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '15rem',
+  bgcolor: 'background.paper',
+  p: 2,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '1rem',
+  borderRadius: '3px'
+};
